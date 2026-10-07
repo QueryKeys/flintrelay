@@ -3,8 +3,8 @@ export type Profile = 'balanced' | 'quality'
 export type Mode = 'off' | 'shadow' | 'active'
 export type Recommendation = { tier: Tier | 'keep'; reason: string; category: string }
 export type RouterConfig = { mode: 'off' | 'shadow'; profile: Profile; allowed: Tier[]; persist: boolean; valid: boolean; errors: string[] }
-export const POLICY_VERSION = '0.1.0'
-export const TESTED_HOSTS = ['2.1.290'] as const
+export const POLICY_VERSION = '0.1.1'
+export const TESTED_HOSTS = ['2.1.286', '2.1.290'] as const
 const rank: Record<Tier, number> = { haiku: 0, sonnet: 1, opus: 2 }
 
 export function parseOptions(input: Record<string, unknown> = {}): RouterConfig {

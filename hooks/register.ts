@@ -32,7 +32,7 @@ export const register: Register = (on, options) => {
       } else {
         await $.command.register({name:'router',description:'Control native model routing and inspect observed usage.',argumentHint:'status|doctor|mode|profile|lock|unlock|escalate|report|reset',immediate:true})
         ownsCommand=true
-        ready=config.valid && TESTED_HOSTS.includes(host as '2.1.290')
+        ready=config.valid && TESTED_HOSTS.includes(host as (typeof TESTED_HOSTS)[number])
       }
       initialized=true
       if(!ready) $.ui.log('FlintRelay: active routing unavailable; use /router doctor.')

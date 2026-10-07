@@ -2,7 +2,7 @@
 
 ## Supported scope
 
-Version 0.1.0 is a preview tested with exact CLI 2.1.290. Account entitlement, native cancellation, undocumented event ordering and live quality are not certified. Other hosts do not receive active support automatically.
+Version 0.1.1 is a preview tested offline with exact CLI 2.1.290 and the macOS Desktop engine 2.1.286. Account entitlement, native cancellation, undocumented event ordering and live quality are not certified. Other hosts do not receive active support automatically.
 
 ## Reporting
 

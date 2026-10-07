@@ -10,6 +10,9 @@ jobs:
   native-offline:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
+    strategy:
+      matrix:
+        claude-version: ['2.1.286', '2.1.290']
     env:
       DISABLE_TELEMETRY: '1'
       DISABLE_ERROR_REPORTING: '1'
@@ -24,7 +27,7 @@ jobs:
       - name: Isolate Claude configuration
         run: echo "CLAUDE_CONFIG_DIR=$RUNNER_TEMP/claude-config" >> "$GITHUB_ENV"
       - name: Install pinned official development tools
-        run: npm install --prefix "$RUNNER_TEMP/router-tools" --ignore-scripts --no-audit --no-fund @anthropic-ai/claude-code@2.1.290 typescript@5.9.3
+        run: npm install --prefix "$RUNNER_TEMP/router-tools" --ignore-scripts --no-audit --no-fund @anthropic-ai/claude-code@${{ matrix.claude-version }} typescript@5.9.3
       - name: Strict types and deterministic cases
         run: |
           "$RUNNER_TEMP/router-tools/node_modules/.bin/tsc" -p tsconfig.json

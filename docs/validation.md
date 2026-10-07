@@ -1,4 +1,14 @@
-# Validation evidence — preview 0.1.0
+# Validation evidence — preview 0.1.1
+
+On 2026-10-07, a user's `/router doctor` result reported host 2.1.286, valid configuration and readiness false. Process inspection confirmed a separate macOS Desktop engine 2.1.286, while the terminal launcher was 2.1.290. This reproduced the preview 0.1.0 exact-host restriction. No private prompts or credentials were read.
+
+A native integration regression reproduced the failure (`ready` false), then passed after admitting only exact 2.1.286 alongside 2.1.290. The regression exercises trusted activation and a difficult task's per-step promotion at compatible effort. Unknown hosts remain rejected, and `xhigh` effort still abstains.
+
+The full native offline matrix passes on the macOS Desktop executable 2.1.286 and native CLI 2.1.290: 45 default, 51 persistence-enabled and 1 configured-off executions, 97 per engine and 52 distinct tests. Strict pure-module TypeScript, eight deterministic cases and strict native validation also pass. External model/stream boundaries are stubbed. Running the Desktop executable's offline harness is not a live GUI/inference certification. The CI workflow checks both exact versions; its live status is separate evidence.
+
+No live model quality, savings or paid comparison experiment ran. Account eligibility, native cancellation and end-to-end inference remain unmeasured.
+
+## Historical evidence — preview 0.1.0
 
 Local evidence on 2026-10-07: macOS arm64, Node 24.15.0, isolated official CLI 2.1.290, TypeScript 5.9.3. No model prompts or live comparison experiment ran.
 
