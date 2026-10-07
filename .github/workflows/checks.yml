@@ -1,0 +1,44 @@
+name: Offline checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  native-offline:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      DISABLE_TELEMETRY: '1'
+      DISABLE_ERROR_REPORTING: '1'
+      CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: '1'
+      CLAUDE_CONFIG_DIR: ${{ runner.temp }}/claude-config
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24.15.0'
+      - name: Install pinned official development tools
+        run: npm install --prefix "$RUNNER_TEMP/router-tools" --ignore-scripts --no-audit --no-fund @anthropic-ai/claude-code@2.1.290 typescript@5.9.3
+      - name: Strict types and deterministic cases
+        run: |
+          "$RUNNER_TEMP/router-tools/node_modules/.bin/tsc" -p tsconfig.json
+          node scripts/check-cases.mjs
+      - name: Marketplace and plugin validation
+        run: |
+          cli="$RUNNER_TEMP/router-tools/node_modules/@anthropic-ai/claude-code-linux-x64/claude"
+          "$cli" plugin validate --strict --json .claude-plugin/marketplace.json
+          "$cli" plugin validate --strict --json .
+      - name: Isolated marketplace install smoke check
+        run: |
+          cli="$RUNNER_TEMP/router-tools/node_modules/@anthropic-ai/claude-code-linux-x64/claude"
+          "$cli" plugin marketplace add "$GITHUB_WORKSPACE"
+          "$cli" plugin install flintrelay@querykeys-flintrelay
+      - name: Full native offline matrix
+        run: python3 scripts/test-matrix.py --claude "$RUNNER_TEMP/router-tools/node_modules/@anthropic-ai/claude-code-linux-x64/claude"
+      - name: Verify clean source packaging
+        run: python3 scripts/package-release.py --output "$RUNNER_TEMP/router-release"

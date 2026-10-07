@@ -1,0 +1,53 @@
+{
+  "name": "flintrelay",
+  "version": "0.1.0",
+  "description": "Native Claude model routing with explicit session control, upgrade-only preview policy and local usage reporting.",
+  "author": {
+    "name": "QueryKeys",
+    "url": "https://github.com/QueryKeys"
+  },
+  "license": "MIT",
+  "userConfig": {
+    "mode": {
+      "type": "string",
+      "title": "Startup mode",
+      "description": "Start off or in shadow. Active requires a user command in each session.",
+      "options": [
+        "off",
+        "shadow"
+      ],
+      "default": "shadow"
+    },
+    "profile": {
+      "type": "string",
+      "title": "Routing profile",
+      "description": "Balanced recommendations or a quality-first model floor.",
+      "options": [
+        "balanced",
+        "quality"
+      ],
+      "default": "balanced"
+    },
+    "allowed_models": {
+      "type": "string",
+      "title": "Allowed routing families",
+      "description": "Comma-separated sonnet,opus. This router allowlist does not establish account entitlement.",
+      "default": "sonnet,opus"
+    },
+    "persist_metrics": {
+      "type": "boolean",
+      "title": "Persist aggregate metrics",
+      "description": "Store bounded local aggregate counts. Never store prompts, code or paths.",
+      "default": false
+    }
+  },
+  "homepage": "https://github.com/QueryKeys/flintrelay",
+  "repository": "https://github.com/QueryKeys/flintrelay",
+  "keywords": [
+    "claude-code",
+    "model-routing",
+    "mods",
+    "usage",
+    "preview"
+  ]
+}

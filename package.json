@@ -1,0 +1,20 @@
+{
+  "name": "flintrelay-preview",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "claude plugin test .",
+    "validate": "claude plugin validate --strict --json .",
+    "test:matrix": "python3 scripts/test-matrix.py"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/QueryKeys/flintrelay.git"
+  },
+  "homepage": "https://github.com/QueryKeys/flintrelay",
+  "bugs": {
+    "url": "https://github.com/QueryKeys/flintrelay/issues"
+  }
+}

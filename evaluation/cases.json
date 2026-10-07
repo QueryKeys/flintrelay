@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "status": "case definitions only; no model outputs or quality results",
+  "splitRule": "Separate calibration and held-out by task/repository family",
+  "execution": "No inference runner is included or authorized. Supply sanitized repository fixtures and executable acceptance checks before a bounded trial.",
+  "cases": [
+    {
+      "id": "mechanical",
+      "prompt": "Format this JSON exactly; preserve every key",
+      "shadowRecommendation": "haiku",
+      "acceptance": [
+        "JSON parses; values and keys match the original exactly.",
+        "Only formatting changes are permitted."
+      ]
+    },
+    {
+      "id": "short-difficult",
+      "prompt": "Fix the race condition in the shared counter",
+      "shadowRecommendation": "opus",
+      "acceptance": [
+        "Concurrent increments preserve the total.",
+        "The regression test fails before and passes after the patch."
+      ]
+    },
+    {
+      "id": "diagnosis",
+      "prompt": "Find the root cause of this intermittent timeout",
+      "shadowRecommendation": "opus",
+      "acceptance": [
+        "Explain the cause with reproducible evidence.",
+        "The correction passes the failing scenario and existing tests."
+      ]
+    },
+    {
+      "id": "cross-file",
+      "prompt": "Implement an endpoint and its client integration",
+      "shadowRecommendation": "sonnet",
+      "acceptance": [
+        "Server and client contract agree.",
+        "Integration and existing regression checks pass."
+      ]
+    },
+    {
+      "id": "migration",
+      "prompt": "Migrate the persisted configuration without losing overrides",
+      "shadowRecommendation": "opus",
+      "acceptance": [
+        "Old data migrates idempotently.",
+        "Unknown fields and user overrides are preserved."
+      ]
+    },
+    {
+      "id": "security",
+      "prompt": "Fix the authorization bug without changing valid access",
+      "shadowRecommendation": "opus",
+      "acceptance": [
+        "Unauthorized requests are denied.",
+        "Authorized and cross-tenant controls retain their intended behavior."
+      ]
+    },
+    {
+      "id": "versioned-docs",
+      "prompt": "Document the supported library version from primary sources",
+      "shadowRecommendation": "keep",
+      "acceptance": [
+        "Claims cite documentation for the installed library version.",
+        "Unsupported capability claims are absent."
+      ]
+    },
+    {
+      "id": "ambiguous-hebrew",
+      "prompt": "עשה את זה כמו קודם",
+      "shadowRecommendation": "keep",
+      "acceptance": [
+        "Request missing requirements rather than inventing scope.",
+        "No unrelated source or configuration changes."
+      ]
+    }
+  ]
+}

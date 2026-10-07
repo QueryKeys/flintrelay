@@ -1,0 +1,20 @@
+{
+  "name": "querykeys-flintrelay",
+  "owner": {
+    "name": "QueryKeys"
+  },
+  "description": "Native Claude Code Model Router preview by QueryKeys.",
+  "plugins": [
+    {
+      "name": "flintrelay",
+      "source": ".",
+      "description": "Native Claude model routing with explicit session control, upgrade-only preview policy and local usage reporting.",
+      "category": "development",
+      "tags": [
+        "model-routing",
+        "mods",
+        "preview"
+      ]
+    }
+  ]
+}
