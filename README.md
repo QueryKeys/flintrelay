@@ -6,6 +6,12 @@ A native Claude Code Mod that recommends a model and per-task effort, preserves 
 
 **Status:** implemented and tested with native offline stubs on **2.1.290** and the macOS Desktop engine **2.1.286**. No live model-quality or savings experiment has run. Automatic model downgrades are disabled; active effort can rise or fall. This is a source preview, not a production quality certification.
 
+## Watch the 30-second overview
+
+[![FlintRelay in 30 seconds: video overview](docs/media/flintrelay-overview-poster.jpg)](docs/media/flintrelay-overview.mp4)
+
+[Watch the video](docs/media/flintrelay-overview.mp4) (30 s, English narration with captions). It shows what FlintRelay does and what it does not do: it recommends a model and effort per task, adds no gateway, classifier request or inference SDK, and starts in shadow mode until you enable active routing.
+
 ## Compatibility
 
 | Host | Behavior |
