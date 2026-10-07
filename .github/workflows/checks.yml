@@ -14,7 +14,6 @@ jobs:
       DISABLE_TELEMETRY: '1'
       DISABLE_ERROR_REPORTING: '1'
       CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: '1'
-      CLAUDE_CONFIG_DIR: ${{ runner.temp }}/claude-config
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
@@ -22,6 +21,8 @@ jobs:
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: '24.15.0'
+      - name: Isolate Claude configuration
+        run: echo "CLAUDE_CONFIG_DIR=$RUNNER_TEMP/claude-config" >> "$GITHUB_ENV"
       - name: Install pinned official development tools
         run: npm install --prefix "$RUNNER_TEMP/router-tools" --ignore-scripts --no-audit --no-fund @anthropic-ai/claude-code@2.1.290 typescript@5.9.3
       - name: Strict types and deterministic cases
