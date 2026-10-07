@@ -1,8 +1,10 @@
+import type { EffortPolicy } from './effort'
 import type { Mode, Profile, Recommendation } from './policy'
 export type Turn = {recommendation: Recommendation; blocked: boolean; escalations: number}
 export class RouterState {
   mode: Mode = 'shadow'
   profile: Profile = 'balanced'
+  effortPolicy: EffortPolicy = 'auto'
   owned = false
   baseline: string | null = null
   locked = false
@@ -17,12 +19,13 @@ export class RouterState {
   lock() { this.locked=true; this.disable(this.mode==='off' ? 'off' : 'shadow') }
   unlock() { this.locked=false; this.disable('shadow') }
   setProfile(profile: Profile) { this.profile=profile; this.revision++ }
+  setEffortPolicy(policy: EffortPolicy) { this.effortPolicy=policy; this.revision++ }
   reset(epoch?: string) { this.disable(this.mode==='off' ? 'off' : 'shadow'); this.locked=false; this.turns.clear(); this.currentTurn=undefined; this.pendingEscalation=false; this.pendingSkill=false; this.epoch=epoch ?? `${this.epoch}/reset`; }
   startTurn(id: string, recommendation: Recommendation) {
     if (this.turns.has(id)) return
     const pending = this.pendingEscalation; this.pendingEscalation=false
     const blocked=this.pendingSkill; this.pendingSkill=false
-    this.turns.set(id,{recommendation:pending ? {tier:'opus',reason:'explicit-escalation',category:'explicit-profile'} : recommendation,blocked,escalations:pending ? 1 : 0})
+    this.turns.set(id,{recommendation:pending ? {tier:'opus',reason:'explicit-escalation',category:'explicit-profile',effort:'high'} : recommendation,blocked,escalations:pending ? 1 : 0})
     this.currentTurn=id
     while(this.turns.size>64) this.turns.delete(this.turns.keys().next().value!)
   }
@@ -34,6 +37,6 @@ export class RouterState {
     if(!id) { if(this.pendingEscalation) return false; this.pendingEscalation=true; this.revision++; return true }
     const turn=this.turns.get(id)
     if(!turn || turn.escalations>=1) return false
-    turn.escalations++; turn.recommendation={tier:'opus',reason:'explicit-escalation',category:'explicit-profile'}; this.revision++; return true
+    turn.escalations++; turn.recommendation={tier:'opus',reason:'explicit-escalation',category:'explicit-profile',effort:'high'}; this.revision++; return true
   }
 }

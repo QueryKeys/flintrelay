@@ -12,7 +12,7 @@ import tempfile
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--claude', default='claude', help='Trusted Claude CLI executable; never sends a model prompt.')
-    parser.add_argument('--profile', choices=['all', 'default', 'persisted', 'off'], default='all')
+    parser.add_argument('--profile', choices=['all', 'default', 'persisted', 'off', 'preserve'], default='all')
     args = parser.parse_args()
     executable = shutil.which(args.claude)
     if executable is None:
@@ -25,7 +25,7 @@ def main():
         version = subprocess.run([executable, '--version'], check=True, capture_output=True, text=True, env=environment).stdout.strip()
         if version not in ['2.1.286 (Claude Code)', '2.1.290 (Claude Code)']:
             parser.error('The preview test matrix requires tested host 2.1.286 or 2.1.290; global installations are never changed.')
-        profiles = ['default', 'persisted', 'off'] if args.profile == 'all' else [args.profile]
+        profiles = ['default', 'persisted', 'off', 'preserve'] if args.profile == 'all' else [args.profile]
         for profile in profiles:
             target = root / profile
             shutil.copytree(source, target, ignore=shutil.ignore_patterns('.git', 'node_modules', '.superpowers', '__pycache__', 'types'))
@@ -43,6 +43,14 @@ def main():
                 for test in (target / 'tests').glob('*.test.ts'):
                     test.unlink()
                 shutil.copyfile(target / 'tests/off.fixture.ts', target / 'tests/off.test.ts')
+            if profile == 'preserve':
+                manifest = target / '.claude-plugin/plugin.json'
+                data = json.loads(manifest.read_text())
+                data['userConfig']['effort_policy']['default'] = 'preserve'
+                manifest.write_text(json.dumps(data, indent=2))
+                for test in (target / 'tests').glob('*.test.ts'):
+                    test.unlink()
+                shutil.copyfile(target / 'tests/preserve.fixture.ts', target / 'tests/preserve.test.ts')
             print('Native offline test profile:', profile, flush=True)
             subprocess.run([executable, 'plugin', 'validate', '--strict', '--json', str(target)], check=True, env=environment)
             subprocess.run([executable, 'plugin', 'test', str(target)], check=True, env=environment)

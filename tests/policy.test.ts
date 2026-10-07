@@ -41,3 +41,11 @@ test('invalid configuration cannot authorize active routing', () => {
 test('migration verbs use the sensitive engineering floor',()=>{
   expect(classify('Migrate the persisted configuration without losing overrides','balanced').tier).toBe('opus')
 })
+
+test('effort option defaults to auto, accepts preserve and rejects malformed policies',()=>{
+  expect(parseOptions({}).effortPolicy).toBe('auto')
+  expect(parseOptions({effort_policy:'preserve'}).effortPolicy).toBe('preserve')
+  expect(parseOptions({effort_policy:'max'}).valid).toBe(false)
+  expect(classify('Format this JSON then fix this bug','balanced').effort).toBe('high')
+  expect(classify('עשה את זה','quality').effort).toBe('keep')
+})

@@ -11,7 +11,8 @@
       "acceptance": [
         "JSON parses; values and keys match the original exactly.",
         "Only formatting changes are permitted."
-      ]
+      ],
+      "shadowEffortRecommendation": "low"
     },
     {
       "id": "short-difficult",
@@ -20,7 +21,8 @@
       "acceptance": [
         "Concurrent increments preserve the total.",
         "The regression test fails before and passes after the patch."
-      ]
+      ],
+      "shadowEffortRecommendation": "high"
     },
     {
       "id": "diagnosis",
@@ -29,7 +31,8 @@
       "acceptance": [
         "Explain the cause with reproducible evidence.",
         "The correction passes the failing scenario and existing tests."
-      ]
+      ],
+      "shadowEffortRecommendation": "high"
     },
     {
       "id": "cross-file",
@@ -38,7 +41,8 @@
       "acceptance": [
         "Server and client contract agree.",
         "Integration and existing regression checks pass."
-      ]
+      ],
+      "shadowEffortRecommendation": "medium"
     },
     {
       "id": "migration",
@@ -47,7 +51,8 @@
       "acceptance": [
         "Old data migrates idempotently.",
         "Unknown fields and user overrides are preserved."
-      ]
+      ],
+      "shadowEffortRecommendation": "high"
     },
     {
       "id": "security",
@@ -56,7 +61,8 @@
       "acceptance": [
         "Unauthorized requests are denied.",
         "Authorized and cross-tenant controls retain their intended behavior."
-      ]
+      ],
+      "shadowEffortRecommendation": "high"
     },
     {
       "id": "versioned-docs",
@@ -65,7 +71,8 @@
       "acceptance": [
         "Claims cite documentation for the installed library version.",
         "Unsupported capability claims are absent."
-      ]
+      ],
+      "shadowEffortRecommendation": "keep"
     },
     {
       "id": "ambiguous-hebrew",
@@ -74,7 +81,8 @@
       "acceptance": [
         "Request missing requirements rather than inventing scope.",
         "No unrelated source or configuration changes."
-      ]
+      ],
+      "shadowEffortRecommendation": "keep"
     }
   ]
 }

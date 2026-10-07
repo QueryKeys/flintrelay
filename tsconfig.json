@@ -1,11 +1,14 @@
 {
   "compilerOptions": {
-    "target":"ES2023",
-    "module":"ESNext",
-    "moduleResolution":"Bundler",
-    "strict":true,
-    "noEmit":true,
-    "skipLibCheck":true
+    "target": "ES2023",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "allowImportingTsExtensions": true
   },
-  "include":["lib/**/*.ts"]
+  "include": [
+    "lib/**/*.ts"
+  ]
 }

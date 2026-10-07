@@ -1,10 +1,10 @@
 [עברית](README.he.md)
 
-# FlintRelay — preview 0.1.1
+# FlintRelay — preview 0.2.0
 
-A native Claude Code Mod that recommends a model, preserves user control, and can promote the main conversation to a stronger family. It uses Claude Code's existing request path. It does not add a gateway, classifier request, or inference SDK.
+A native Claude Code Mod that recommends a model and per-task effort, preserves user control, and can promote the main conversation to a stronger family. It uses Claude Code's existing request path. It does not add a gateway, classifier request, or inference SDK.
 
-**Status:** implemented and tested with native offline stubs on **2.1.290** and the macOS Desktop engine **2.1.286**. No live model-quality or savings experiment has run. Automatic downgrades are disabled. This is a source preview, not a production quality certification.
+**Status:** implemented and tested with native offline stubs on **2.1.290** and the macOS Desktop engine **2.1.286**. No live model-quality or savings experiment has run. Automatic model downgrades are disabled; active effort can rise or fall. This is a source preview, not a production quality certification.
 
 ## Compatibility
 
@@ -29,7 +29,7 @@ claude plugin marketplace add QueryKeys/flintrelay
 claude plugin install flintrelay@querykeys-flintrelay
 ```
 
-Restart Claude Code. If configuration is requested, run `/plugin configure flintrelay@querykeys-flintrelay` and review the four defaults (shadow, balanced, sonnet/opus, persistence off). Then run `/router doctor` and `/router status`. Shadow is the default; enable active explicitly only when ready. The marketplace follows this repository; updates follow the plugin's version. Read the [official marketplace guide](https://code.claude.com/docs/en/plugin-marketplaces).
+Restart Claude Code. If configuration is requested, run `/plugin configure flintrelay@querykeys-flintrelay` and review the five defaults (shadow, balanced, sonnet/opus, persistence off, automatic effort). Then run `/router doctor` and `/router status`. Shadow is the default; enable active explicitly only when ready. The marketplace follows this repository; updates follow the plugin's version. Read the [official marketplace guide](https://code.claude.com/docs/en/plugin-marketplaces).
 
 Download a fixed preview from [Releases](https://github.com/QueryKeys/flintrelay/releases). The release ZIP includes the plugin, license and documentation; verify its SHA-256 before extracting it. Load the extracted root with `--plugin-dir` as shown below.
 
@@ -60,16 +60,18 @@ Shadow is the default. `mode active` is a deliberate grant of control for this s
 
 | Command | Meaning |
 | --- | --- |
-| `/router status` | Mode, profile, ownership and lock |
+| `/router status` | Mode, profile, ownership, effort policy and lock |
 | `/router doctor` | Host, exact tested versions, readiness and limits |
 | `/router mode off` | Stop routing and ongoing collection; survives clear/resume and native switches |
 | `/router mode shadow` | Recommend only; revoke ownership |
 | `/router mode active` | Acquire current native model as the owned session baseline |
 | `/router profile balanced` | Recommend based on local bilingual task rules |
 | `/router profile quality` | Prefer an Opus floor for nonempty new tasks |
+| `/router effort auto` | Adapt effort up or down on recognized tasks while active |
+| `/router effort preserve` | Preserve incoming effort; retain model routing compatibility checks |
 | `/router lock` | Revoke ownership; preserve native model choices |
 | `/router unlock` | Return to shadow; does not reacquire ownership |
-| `/router escalate` | Request an Opus floor for the current or next turn, at most once |
+| `/router escalate` | Request an Opus and high-effort floor for the current or next turn, at most once |
 | `/router report` | Observed request/token counts, unknown usage, mismatch and truncation counts |
 | `/router reset` | Revoke ownership, clear live records and delete router-owned persisted metrics if enabled |
 
@@ -82,14 +84,32 @@ Read-only status/report/doctor may be called without a trusted mutation origin. 
 - Existing Opus stays Opus, even when a smaller family is recommended. Unknown model IDs and expanded-context modifiers abstain.
 - A request must match both the session's current native model and the baseline explicitly granted to the router. A model change revokes ownership; a transient override protects the rest of its turn.
 - Skill expansion conservatively blocks routing for in-flight turns and the next started turn, because the native skill event exposes no turn ID. Reset clears that pending marker. Subagent requests pass through unchanged.
-- The current effort value is preserved. Promotions with numeric, `max` or `xhigh` effort abstain, because alias mappings vary. Sessions configured with `xhigh` may therefore prevent active promotion; shadow still works.
+- Active `effort_policy=auto` selects effort locally for the current turn. It can replace an incoming `xhigh` or `max` with a compatible lower level and allow a previously blocked model promotion. Numeric internal budgets remain unchanged. In `preserve`, advanced/numeric effort continues to prevent incompatible alias promotion.
 - A mismatch between a router promotion and the reported answering family stops further promotions for that turn. No inference retry is initiated by the plugin.
 - Task classification is deterministic and heuristic. It is not a calibrated guarantee of model quality. Prompts are never changed or added to.
 - The router does not execute tests, infer success from stdout, approve tools, replace your process skills, or change permission settings.
 
+## Per-task effort
+
+| Recognized task | Recommendation |
+| --- | --- |
+| Bounded formatting, extraction or summarization | `low` |
+| Ordinary feature/function/test implementation | `medium` |
+| Debugging, root-cause work, architecture, security or migration | `high` |
+| Explicitly deep/comprehensive architecture or sensitive analysis | `xhigh` on a verified compatible ID; otherwise `high` |
+| Empty or ambiguous instruction | Keep the incoming effort |
+
+Effort is selected independently of the model floor: the `quality` profile may request Opus with low effort for a bounded formatting task. Mixed tasks receive the highest recognized effort requirement. Automatic `max` is not selected. These rules are heuristics, not calibrated quality guarantees. [Official effort guidance](https://code.claude.com/docs/en/model-config#adjust-effort-level), [API effort](https://platform.claude.com/docs/en/build-with-claude/effort).
+
+The tested native engines clamp rewritten effort to their model and organization/settings limits before inference. Exact compatible IDs can receive `xhigh`; promotion targets are provider-dependent aliases and use common levels through `high`. Unknown versions and unchanged unsupported models receive no injected effort. Haiku 5.5 effort is not admitted on these older hosts. Changing effort can affect prompt caching; savings remain unmeasured.
+
+A trusted native `/effort` command puts the router into `preserve` for this session and passes through to Claude. Resume adaptation explicitly with `/router effort auto`. Model switches revoke all routing ownership; Skills protect affected turns. The step contract exposes no startup effort provenance: `--effort`, environment overrides and an already-saved default cannot be distinguished reliably from each other. To retain those choices, configure `effort_policy=preserve` or run `/router effort preserve` before active mode. Automatic mode intentionally adapts incoming defaults, including a saved `xhigh`, without writing global Claude settings.
+
+Shadow prints the recommendation and forwards the incoming request unchanged. Reports count requested effort, while answered effort remains **unobserved**: native caps and other hooks may change it after this plugin. No extra inference request is used to classify the task.
+
 ## Options
 
-The manifest exposes startup `mode` (`off` or `shadow`), `profile` (`balanced` or `quality`), `allowed_models` (comma-separated `sonnet,opus`), and `persist_metrics` (default `false`). Unknown or malformed options invalidate active mode.
+The manifest exposes startup `mode` (`off` or `shadow`), `profile` (`balanced` or `quality`), `allowed_models` (comma-separated `sonnet,opus`), `persist_metrics` (default `false`), and `effort_policy` (`auto`, default, or `preserve`). Unknown or malformed options invalidate active mode.
 
 `active` cannot be a startup default. Exact runtime ownership must be granted in each session. Native plugin configuration is managed by Claude Code; the product contains no installer that edits global settings or cached agents.
 
@@ -110,13 +130,13 @@ claude plugin test .
 claude plugin validate --strict --json .
 ```
 
-For the default, persistence-enabled and configured-off profiles, run the isolated matrix:
+For the default, persistence-enabled, configured-off and effort-preserve profiles, run the isolated matrix:
 
 ```sh
 python3 scripts/test-matrix.py --claude /absolute/path/to/trusted/claude
 ```
 
-The matrix requires an exact tested 2.1.286 or 2.1.290 engine, creates temporary source copies and a temporary Claude configuration, and runs only validation/offline tests. It never installs or upgrades Claude and never submits a prompt. Persistence and off fixtures are deliberately named `.fixture.ts`; the matrix enables and loads them in copied profiles.
+The matrix requires an exact tested 2.1.286 or 2.1.290 engine, creates temporary source copies and a temporary Claude configuration, and runs only validation/offline tests. It never installs or upgrades Claude and never submits a prompt. Persistence, off and preserve fixtures are deliberately named `.fixture.ts`; the matrix enables and loads them in copied profiles.
 
 Native tests use `claude-code/testing` with stubs at external boundaries. No sign-in or network is needed. TypeScript checks for pure modules can run with TypeScript 5.9.3. Native adapter declarations must come from the exact host before claiming authoritative type compatibility; the public declarations available during development were older.
 

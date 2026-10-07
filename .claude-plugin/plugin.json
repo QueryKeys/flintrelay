@@ -1,7 +1,7 @@
 {
   "name": "flintrelay",
-  "version": "0.1.1",
-  "description": "Native Claude model routing with explicit session control, upgrade-only preview policy and local usage reporting.",
+  "version": "0.2.0",
+  "description": "Native Claude model and per-task effort routing with explicit session control and local usage reporting.",
   "author": {
     "name": "QueryKeys",
     "url": "https://github.com/QueryKeys"
@@ -39,6 +39,16 @@
       "title": "Persist aggregate metrics",
       "description": "Store bounded local aggregate counts. Never store prompts, code or paths.",
       "default": false
+    },
+    "effort_policy": {
+      "type": "string",
+      "title": "Effort policy",
+      "description": "Automatic per-task effort in active mode, or preserve the incoming effort. Session commands and manual effort choices take priority.",
+      "options": [
+        "auto",
+        "preserve"
+      ],
+      "default": "auto"
     }
   },
   "homepage": "https://github.com/QueryKeys/flintrelay",
