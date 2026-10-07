@@ -1,0 +1,10 @@
+Generation method: built-in Imagegen.
+Output: flintrelay-logo.png, transparent raster PNG.
+
+Use case: logo-brand.
+Create a polished, original logo for FlintRelay, an open-source developer tool that intelligently routes Claude tasks between models and reasoning effort levels.
+Deliver ONE finished primary horizontal logo lockup on a genuinely transparent background: a distinctive compact symbol on the left and the exact wordmark "FlintRelay" on the right. No other text.
+Concept: a sharply cut flint stone whose angular silhouette and boldly cut negative space subtly form an F and a branching relay path. One input, a precise junction, and three possible paths, integrated into a single coherent solid mark, not a separate node diagram. A small ember-orange selected path conveys intelligent selection. Make the mark memorable, calm and engineered; recognizable at favicon size. Strong silhouette, ample negative space, very few facets, no fragile fine details.
+Typography: excellent custom-looking geometric sans lettering, medium-bold, clean optical kerning, exact capital F and R as in FlintRelay. Symbol and text feel designed together.
+Style: flat vector-like professional brand identity, crisp edges, two solid colors, no mockup. Dark mineral charcoal for the main symbol and lettering with a restrained warm ember-orange accent implied by the flint concept. Very high contrast and elegant restrained composition.
+Layout: horizontally balanced, large useful asset with modest transparent outer padding. No background panel, no canvas frame, no texture, no glow, no gradients, no 3D, no drop shadows, no spark decorations, no mascots, no robot/brain/circuit-board clichés, no stock lightning icon, no tagline, no watermark. Output only the usable logo.

@@ -1,0 +1,6 @@
+Generation method: built-in Imagegen, edit of the approved primary logo.
+Output: flintrelay-logo-dark.png, opaque raster PNG for dark backgrounds.
+
+Precise logo adaptation for GitHub dark mode. Use the attached approved FlintRelay logo as the exact design reference. Output a finished CLEAN logo header image with a SOLID OPAQUE dark charcoal background (#0d1117).
+Preserve the exact symbol silhouette, three routing paths, letter shapes, exact word FlintRelay, spacing and horizontal layout of the reference. Recolor all charcoal foreground to clean solid ivory-white, keeping the selected path vivid ember orange. Fill all negative spaces and letter counters uniformly with the same opaque #0d1117 background.
+Mandatory finish: smooth crisp solid edges, clean interiors, no speckles, no grunge, no eroded or distressed ink, no line outlines, no scanning texture, no glowing, no shadows, no extra elements. The reference is a modern flat logo, not an aged print. The result should look like a carefully prepared brand asset composited on GitHub's dark background. Keep the source's wide 3:1 composition. No extra text.

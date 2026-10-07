@@ -1,3 +1,10 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/branding/flintrelay-logo-dark.png">
+    <img src="assets/branding/flintrelay-logo.png" alt="FlintRelay — model and effort routing for Claude Code" width="480">
+  </picture>
+</p>
+
 [עברית](README.he.md)
 
 # FlintRelay — preview 0.2.0

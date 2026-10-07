@@ -1,3 +1,10 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/branding/flintrelay-logo-dark.png">
+    <img src="assets/branding/flintrelay-logo.png" alt="FlintRelay — ניתוב מודלים ו־Effort ל־Claude Code" width="480">
+  </picture>
+</p>
+
 # FlintRelay — גרסת Preview 0.2.0
 
 תוסף קהילתי ל־Claude Code, ברישיון MIT. הוא ממליץ על מודל ו־Effort באמצעות מדיניות מקומית, בלי קריאת מודל נוספת. ברירת המחדל היא תצפית; ניתוב פעיל דורש שליטה מפורשת ומאפשר קידום מודל והתאמת Effort מעלה ומטה.
