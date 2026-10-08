@@ -152,7 +152,7 @@ python3 scripts/test-matrix.py --claude /absolute/path/to/trusted/claude
 
 The matrix requires an exact tested 2.1.286, 2.1.290 or 2.1.293 engine, creates temporary source copies and a temporary Claude configuration, and runs only validation/offline tests. It never installs or upgrades Claude and never submits a prompt. Persistence, off and preserve fixtures are deliberately named `.fixture.ts`; the matrix enables and loads them in copied profiles.
 
-Native tests use `claude-code/testing` with stubs at external boundaries. No sign-in or network is needed. TypeScript checks for pure modules can run with TypeScript 5.9.3. Native adapter declarations must come from the exact host before claiming authoritative type compatibility; the public declarations available during development were older.
+Native tests use `claude-code/testing` with stubs at external boundaries. No sign-in or network is needed. TypeScript checks for pure modules can run with TypeScript 5.9.3 (CI) or 7.0.2; both pass `tsc -p tsconfig.json` on 2026-10-09. Native adapter declarations must come from the exact host before claiming authoritative type compatibility; the public declarations available during development were older.
 
 ## Disable or remove
 
