@@ -23,8 +23,8 @@ def main():
         environment = os.environ.copy()
         environment.update(CLAUDE_CONFIG_DIR=str(root / 'config'), DISABLE_TELEMETRY='1', DISABLE_ERROR_REPORTING='1', CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC='1')
         version = subprocess.run([executable, '--version'], check=True, capture_output=True, text=True, env=environment).stdout.strip()
-        if version not in ['2.1.286 (Claude Code)', '2.1.290 (Claude Code)']:
-            parser.error('The preview test matrix requires tested host 2.1.286 or 2.1.290; global installations are never changed.')
+        if version not in ['2.1.286 (Claude Code)', '2.1.290 (Claude Code)', '2.1.293 (Claude Code)']:
+            parser.error('The preview test matrix requires tested host 2.1.286, 2.1.290 or 2.1.293; global installations are never changed.')
         profiles = ['default', 'persisted', 'off', 'preserve'] if args.profile == 'all' else [args.profile]
         for profile in profiles:
             target = root / profile

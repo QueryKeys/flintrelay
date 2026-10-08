@@ -17,7 +17,7 @@
 
 ## התקנה
 
-המנועים שנבדקו הם CLI **2.1.290** ומנוע Desktop ב־macOS **2.1.286**. ל־Desktop מנוע נפרד: שדרוג הטרמינל אינו משדרג אותו. `/router doctor` מציג את גרסת השיחה בפועל. ההתקנה אינה משדרגת את Claude.
+המנועים שנבדקו הם CLI **2.1.290**, **2.1.293** ומנוע Desktop ב־macOS **2.1.286**. ל־Desktop מנוע נפרד: שדרוג הטרמינל אינו משדרג אותו. `/router doctor` מציג את גרסת השיחה בפועל. ההתקנה אינה משדרגת את Claude.
 
 ```sh
 claude plugin marketplace add QueryKeys/flintrelay

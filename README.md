@@ -11,7 +11,7 @@
 
 A native Claude Code Mod that recommends a model and per-task effort, preserves user control, and can promote the main conversation to a stronger family. It uses Claude Code's existing request path. It does not add a gateway, classifier request, or inference SDK.
 
-**Status:** implemented and tested with native offline stubs on **2.1.290** and the macOS Desktop engine **2.1.286**. No live model-quality or savings experiment has run. Automatic model downgrades are disabled; active effort can rise or fall. This is a source preview, not a production quality certification.
+**Status:** implemented and tested with native offline stubs on **2.1.290**, **2.1.293** and the macOS Desktop engine **2.1.286**. No live model-quality or savings experiment has run. Automatic model downgrades are disabled; active effort can rise or fall. This is a source preview, not a production quality certification.
 
 ## Watch the 30-second overview
 
@@ -24,6 +24,7 @@ A native Claude Code Mod that recommends a model and per-task effort, preserves 
 | Host | Behavior |
 | --- | --- |
 | CLI 2.1.290 | Native validator and stubbed integration tests pass; active can be explicitly enabled |
+| Claude Code 2.1.293 (including the engine embedded in current macOS Desktop) | Native validator and offline matrix pass; active can be explicitly enabled |
 | CLI 2.1.284 | Native test command refuses Mods by default; not supported for active routing |
 | Other CLI versions | Shadow/diagnostics if the host can load the plugin; active refuses until that exact version is tested |
 | macOS Desktop engine 2.1.286 | Native validation and offline matrix pass; active can be explicitly enabled |
@@ -35,7 +36,7 @@ The documented stable terminal floor is 2.1.287. Meeting that floor alone does n
 
 ## Install from GitHub
 
-Use exact Claude Code CLI **2.1.290**, or macOS Desktop with its tested **2.1.286** engine, for this preview. Installing the plugin does not upgrade Claude. Newer versions need a compatibility pass before active routing is enabled.
+Use exact Claude Code **2.1.290** or **2.1.293**, or macOS Desktop with its tested **2.1.286** engine, for this preview. Installing the plugin does not upgrade Claude. Newer versions need a compatibility pass before active routing is enabled.
 
 ```sh
 claude plugin marketplace add QueryKeys/flintrelay
@@ -149,7 +150,7 @@ For the default, persistence-enabled, configured-off and effort-preserve profile
 python3 scripts/test-matrix.py --claude /absolute/path/to/trusted/claude
 ```
 
-The matrix requires an exact tested 2.1.286 or 2.1.290 engine, creates temporary source copies and a temporary Claude configuration, and runs only validation/offline tests. It never installs or upgrades Claude and never submits a prompt. Persistence, off and preserve fixtures are deliberately named `.fixture.ts`; the matrix enables and loads them in copied profiles.
+The matrix requires an exact tested 2.1.286, 2.1.290 or 2.1.293 engine, creates temporary source copies and a temporary Claude configuration, and runs only validation/offline tests. It never installs or upgrades Claude and never submits a prompt. Persistence, off and preserve fixtures are deliberately named `.fixture.ts`; the matrix enables and loads them in copied profiles.
 
 Native tests use `claude-code/testing` with stubs at external boundaries. No sign-in or network is needed. TypeScript checks for pure modules can run with TypeScript 5.9.3 (CI) or 7.0.2; both pass `tsc -p tsconfig.json` on 2026-10-09. Native adapter declarations must come from the exact host before claiming authoritative type compatibility; the public declarations available during development were older.
 

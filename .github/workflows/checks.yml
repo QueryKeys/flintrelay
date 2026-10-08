@@ -12,7 +12,7 @@ jobs:
     timeout-minutes: 10
     strategy:
       matrix:
-        claude-version: ['2.1.286', '2.1.290']
+        claude-version: ['2.1.286', '2.1.290', '2.1.293']
     env:
       DISABLE_TELEMETRY: '1'
       DISABLE_ERROR_REPORTING: '1'
