@@ -49,3 +49,36 @@ test('effort option defaults to auto, accepts preserve and rejects malformed pol
   expect(classify('Format this JSON then fix this bug','balanced').effort).toBe('high')
   expect(classify('עשה את זה','quality').effort).toBe('keep')
 })
+
+test('plain-language hard problems are recognized in English and Hebrew', () => {
+  for (const text of ['The checkout keeps crashing at random, figure out why', 'we have a memory leak somewhere', 'users lost data after the update', 'let us redesign the whole thing from scratch', 'הבדיקה נכשלת לפעמים בצורה אקראית', 'יש דליפת זיכרון באפליקציה', 'המשתמשים איבדו נתונים אחרי העדכון', 'בוא נבנה מחדש את כל המערכת מאפס']) {
+    expect([text, classify(text, 'balanced').tier]).toEqual([text, 'opus'])
+    expect([text, classify(text, 'balanced').effort]).toEqual([text, 'high'])
+  }
+})
+test('plain-language everyday engineering requests are recognized', () => {
+  for (const text of ['can you add a login button to the page', 'please update the readme with the new steps', 'make the header sticky', 'תוסיף כפתור התחברות לדף', 'תעדכן את הקובץ עם הצעדים החדשים', 'תסדר את עניין הנתונים']) {
+    expect([text, classify(text, 'balanced').tier]).toEqual([text, 'sonnet'])
+    expect([text, classify(text, 'balanced').effort]).toEqual([text, 'medium'])
+  }
+  for (const text of ['it is not working, please fix it', 'the build is broken and fails on CI', 'זה לא עובד, תתקן', 'האפליקציה קורסת כשלוחצים על שמירה']) {
+    expect([text, classify(text, 'balanced').tier]).toEqual([text, 'sonnet'])
+    expect([text, classify(text, 'balanced').effort]).toEqual([text, 'high'])
+  }
+})
+test('plain-language bounded chores are low-effort mechanical candidates', () => {
+  for (const text of ['fix the typo in the title', 'rename this variable to count', 'תקן שגיאת כתיב בכותרת', 'תסכם את הקובץ הזה']) {
+    expect([text, classify(text, 'balanced').tier]).toEqual([text, 'haiku'])
+    expect([text, classify(text, 'balanced').effort]).toEqual([text, 'low'])
+  }
+})
+test('chatter, acknowledgements and questions stay unclassified', () => {
+  for (const text of ['ok thanks', 'continue', 'yes', 'what time is it', 'hello there', 'כן', 'תודה', 'תן לזה מה שצריך', 'מה אתה חושב?', 'address the previous point']) {
+    expect([text, classify(text, 'balanced').tier]).toEqual([text, 'keep'])
+    expect([text, classify(text, 'balanced').effort]).toEqual([text, 'keep'])
+  }
+})
+test('deep plain-language wording raises sensitive work to xhigh', () => {
+  expect(classify('please look into this memory leak very thoroughly', 'balanced').effort).toBe('xhigh')
+  expect(classify('תבדוק את דליפת הזיכרון הזו בעומק', 'balanced').effort).toBe('xhigh')
+})

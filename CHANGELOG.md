@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.2 — 2026-10-09
+
+- Recognize plain, conversational requests in English and Hebrew (for example "it is not working", "add a button", "תסדר את עניין הנתונים", "האפליקציה קורסת") for model and effort recommendations. Intermittent failures, memory leaks, data loss, redesigns and rebuilds from scratch count as hard problems; everyday add/update/change requests are ordinary engineering; typos, renames and summaries are bounded chores. Acknowledgements and open questions still abstain.
+- Signals live in `lib/signals.ts`. They remain local heuristics, not a quality measure; model promotion is still upgrade-only and requires explicit active ownership.
+
 ## 0.2.1 — 2026-10-09
 
 - Admit the exact Claude Code host 2.1.293 (the engine now embedded in macOS Desktop). The native offline matrix passes on 2.1.293 for all four profiles (76 default, 82 persistence-enabled, 1 configured-off and 1 effort-preserve test executions) and still passes on 2.1.290. Add a regression for session activation and promotion on 2.1.293. Other versions remain unadmitted and the version gate is unchanged.

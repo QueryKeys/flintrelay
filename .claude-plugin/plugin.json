@@ -1,6 +1,6 @@
 {
   "name": "flintrelay",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Native Claude model and per-task effort routing with explicit session control and local usage reporting.",
   "author": {
     "name": "QueryKeys",

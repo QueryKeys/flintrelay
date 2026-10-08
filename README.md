@@ -7,7 +7,7 @@
 
 [עברית](README.he.md)
 
-# FlintRelay — preview 0.2.1
+# FlintRelay — preview 0.2.2
 
 A native Claude Code Mod that recommends a model and per-task effort, preserves user control, and can promote the main conversation to a stronger family. It uses Claude Code's existing request path. It does not add a gateway, classifier request, or inference SDK.
 
@@ -100,7 +100,7 @@ Read-only status/report/doctor may be called without a trusted mutation origin. 
 - Skill expansion conservatively blocks routing for in-flight turns and the next started turn, because the native skill event exposes no turn ID. Reset clears that pending marker. Subagent requests pass through unchanged.
 - Active `effort_policy=auto` selects effort locally for the current turn. It can replace an incoming `xhigh` or `max` with a compatible lower level and allow a previously blocked model promotion. Numeric internal budgets remain unchanged. In `preserve`, advanced/numeric effort continues to prevent incompatible alias promotion.
 - A mismatch between a router promotion and the reported answering family stops further promotions for that turn. No inference retry is initiated by the plugin.
-- Task classification is deterministic and heuristic. It is not a calibrated guarantee of model quality. Prompts are never changed or added to.
+- Task classification understands plain conversational wording in English and Hebrew as well as technical terms (see `lib/signals.ts`); acknowledgements and open questions abstain. Task classification is deterministic and heuristic. It is not a calibrated guarantee of model quality. Prompts are never changed or added to.
 - The router does not execute tests, infer success from stdout, approve tools, replace your process skills, or change permission settings.
 
 ## Per-task effort

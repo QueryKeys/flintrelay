@@ -83,6 +83,42 @@
         "No unrelated source or configuration changes."
       ],
       "shadowEffortRecommendation": "keep"
+    },
+    {
+      "id": "plain-hebrew-chore",
+      "prompt": "תסדר את עניין הנתונים",
+      "shadowRecommendation": "sonnet",
+      "acceptance": [
+        "The stated data problem is identified and corrected; existing tests still pass."
+      ],
+      "shadowEffortRecommendation": "medium"
+    },
+    {
+      "id": "plain-broken",
+      "prompt": "it is not working, please fix it",
+      "shadowRecommendation": "sonnet",
+      "acceptance": [
+        "The failure is reproduced, explained and fixed; a regression test covers it."
+      ],
+      "shadowEffortRecommendation": "high"
+    },
+    {
+      "id": "plain-intermittent",
+      "prompt": "The checkout keeps crashing at random, figure out why",
+      "shadowRecommendation": "opus",
+      "acceptance": [
+        "Cause explained with reproducible evidence; the failing scenario passes after the fix."
+      ],
+      "shadowEffortRecommendation": "high"
+    },
+    {
+      "id": "plain-chatter",
+      "prompt": "ok thanks",
+      "shadowRecommendation": "keep",
+      "acceptance": [
+        "No routing change."
+      ],
+      "shadowEffortRecommendation": "keep"
     }
   ]
 }
