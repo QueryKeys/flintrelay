@@ -7,7 +7,7 @@
 
 [עברית](README.he.md)
 
-# FlintRelay — preview 0.2.0
+# FlintRelay — preview 0.2.1
 
 A native Claude Code Mod that recommends a model and per-task effort, preserves user control, and can promote the main conversation to a stronger family. It uses Claude Code's existing request path. It does not add a gateway, classifier request, or inference SDK.
 

@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.2.1 — 2026-10-09
 
 - Admit the exact Claude Code host 2.1.293 (the engine now embedded in macOS Desktop). The native offline matrix passes on 2.1.293 for all four profiles (76 default, 82 persistence-enabled, 1 configured-off and 1 effort-preserve test executions) and still passes on 2.1.290. Add a regression for session activation and promotion on 2.1.293. Other versions remain unadmitted and the version gate is unchanged.
 - Run the native offline matrix for 2.1.286, 2.1.290 and 2.1.293 in CI.
