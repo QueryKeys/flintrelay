@@ -1,11 +1,12 @@
 import { recommendEffort } from './effort.ts'
+import { HARD_PLAIN, MECHANICAL_PLAIN, DEBUG_PLAIN, ORDINARY_PLAIN } from './signals.ts'
 import type { EffortPolicy, EffortRecommendation } from './effort.ts'
 export type Tier = 'haiku' | 'sonnet' | 'opus'
 export type Profile = 'balanced' | 'quality'
 export type Mode = 'off' | 'shadow' | 'active'
 export type Recommendation = { tier: Tier | 'keep'; reason: string; category: string; effort?: EffortRecommendation }
 export type RouterConfig = { mode: 'off' | 'shadow'; profile: Profile; allowed: Tier[]; persist: boolean; effortPolicy: EffortPolicy; valid: boolean; errors: string[] }
-export const POLICY_VERSION = '0.2.1'
+export const POLICY_VERSION = '0.2.2'
 export const TESTED_HOSTS = ['2.1.286', '2.1.290', '2.1.293'] as const
 const rank: Record<Tier, number> = { haiku: 0, sonnet: 1, opus: 2 }
 
@@ -34,12 +35,12 @@ function classifyModel(text: string, profile: Profile): Recommendation {
   // Classification is advisory. Only explicit session ownership permits promotion.
   const normalized = text.slice(0, 100_000).toLowerCase().trim()
   if (!normalized) return {tier:'keep',reason:'empty-task',category:'unknown'}
-  if (/(architectur|race condition|deadlock|concurrenc|security|authoriz|authenticat|migrat|root cause|ארכיטקט|אבטח|הרשא|אימות משתמש|שורש הבעיה|תנאי מרוץ|מקביליות|מיגרציה)/u.test(normalized))
+  if (/(architectur|race condition|deadlock|concurrenc|security|authoriz|authenticat|migrat|root cause|ארכיטקט|אבטח|הרשא|אימות משתמש|שורש הבעיה|תנאי מרוץ|מקביליות|מיגרציה)/u.test(normalized) || HARD_PLAIN.test(normalized))
     return {tier:'opus',reason:'complex-or-sensitive',category:'engineering'}
   if (profile === 'quality') return {tier:'opus',reason:'quality-profile',category:'explicit-profile'}
-  if (/(format (this |the )?(json|csv)|extract (only |the )?(fields|values)|summarize (this|the following)|עצב.*json|חלץ.*(שדות|ערכים)|סכם את)/u.test(normalized))
+  if (/(format (this |the )?(json|csv)|extract (only |the )?(fields|values)|summarize (this|the following)|עצב.*json|חלץ.*(שדות|ערכים)|סכם את)/u.test(normalized) || MECHANICAL_PLAIN.test(normalized))
     return {tier:'haiku',reason:'bounded-mechanical-candidate',category:'mechanical'}
-  if (/(implement|add (a |an |the )?(feature|function|test|endpoint)|fix (the |this |a )?(bug|test)|build.*(feature|component)|ממש|הוסף.*(פונקציה|בדיקה|תכונה)|תקן.*(באג|בדיקה))/u.test(normalized))
+  if (/(implement|add (a |an |the )?(feature|function|test|endpoint)|fix (the |this |a )?(bug|test)|build.*(feature|component)|ממש|הוסף.*(פונקציה|בדיקה|תכונה)|תקן.*(באג|בדיקה))/u.test(normalized) || DEBUG_PLAIN.test(normalized) || ORDINARY_PLAIN.test(normalized))
     return {tier:'sonnet',reason:'ordinary-engineering',category:'engineering'}
   return {tier:'keep',reason:'insufficient-task-evidence',category:'unknown'}
 }
