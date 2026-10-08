@@ -2,7 +2,7 @@
 
 This preview prioritizes native user control and observable behavior. Before proposing new automatic routing, read the README limits and the research/validation notes.
 
-Use Node 24.15.0, Python 3, TypeScript 5.9.3 and trusted Claude CLI 2.1.290 or the tested Desktop engine 2.1.286. There are no runtime npm dependencies. Do not change global authentication or enable experimental flags to make a test pass.
+Use Node 24.15.0, Python 3, TypeScript 5.9.3 (7.0.2 also type-checks cleanly) and trusted Claude CLI 2.1.290 or the tested Desktop engine 2.1.286. There are no runtime npm dependencies. Do not change global authentication or enable experimental flags to make a test pass.
 
 ```sh
 python3 scripts/test-matrix.py --claude /absolute/path/to/claude
