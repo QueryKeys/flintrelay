@@ -62,6 +62,16 @@ test('tested Desktop 2.1.286 can acquire ownership and promote a difficult task'
   await drain($.turn.step({turnId:'desktop',index:0,model:'claude-sonnet-5-5',effort:'high',messageCount:1}))
   expect(sent.model).toBe('opus');expect(sent.effort).toBe('high')
 })
+test('tested host 2.1.293 can acquire ownership and promote a difficult task',async($,on)=>{
+  setup(on,'2.1.293');let sent:any
+  on('turn.step',async function*(_,e){sent=e;return reply(e)})
+  await $.session.start({cwd:'/work',surface:'desktop',isInteractive:true})
+  expect(JSON.parse((await $.command.run({command:'router',args:'doctor'})).text).ready).toBe(true)
+  expect((await active($)).text).toContain('Router active for this session')
+  await $.turn.start({turnId:'h293',text:'Design a new architecture'})
+  await drain($.turn.step({turnId:'h293',index:0,model:'claude-sonnet-5-5',effort:'high',messageCount:1}))
+  expect(sent.model).toBe('opus');expect(sent.effort).toBe('high')
+})
 test('subagent and transient native overrides preserve the incoming model', async($,on)=>{
   setup(on); const sent:string[]=[]
   on('turn.step',async function*(_,e){sent.push(e.model);return reply(e)})
